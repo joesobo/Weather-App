@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:weather_app/settings_page.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  String dropdownValue = 'San Fransisco';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Column(
         children: <Widget>[
           Padding(
@@ -12,7 +21,25 @@ class HomePage extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Text('Home'),
+                Container(
+                  color: Colors.transparent,
+                  child: DropdownButton<String>(
+                    elevation: 0,
+                    value: dropdownValue,
+                    onChanged: (String newValue) {
+                      setState(() {
+                        dropdownValue = newValue;
+                      });
+                    },
+                    items: <String>['San Fransisco', 'San Luis Obispo', 'Los Angeles', 'New York']
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                  ),
+                ),
                 IconButton(
                   icon: Icon(Icons.settings),
                   onPressed: () {
