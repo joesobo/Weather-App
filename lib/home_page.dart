@@ -79,7 +79,7 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
                 SizedBox(height: 80),
-                mainDisplay(),
+                mainDisplay(75, "it\'s sunny", 60, 80, 9, 50, 41),
               ],
             ),
           ),
@@ -88,7 +88,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget mainDisplay() {
+  Widget mainDisplay(int temp, String message, int low, int high, int mph, int rain, int humidity) {
     return ClipRect(
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
@@ -106,15 +106,15 @@ class _HomePageState extends State<HomePage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Text("75°", style: giantBold),
-                    Text("it's sunny", style: normalLarge),
+                    Text("$temp°", style: giantBold),
+                    Text("$message", style: normalLarge),
                     SizedBox(height: 16),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Row(
                           children: <Widget>[
-                            Text("60°", style: normalLarge),
+                            Text("$low°", style: normalLarge),
                             Icon(
                               Icons.arrow_drop_down,
                               color: Colors.white,
@@ -124,7 +124,7 @@ class _HomePageState extends State<HomePage> {
                         SizedBox(width: 24),
                         Row(
                           children: <Widget>[
-                            Text("80°", style: normalLarge),
+                            Text("$high°", style: normalLarge),
                             Icon(
                               Icons.arrow_drop_up,
                               color: Colors.white,
@@ -184,15 +184,16 @@ class _HomePageState extends State<HomePage> {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
+                                //out of 100mph
                                 LinearPercentIndicator(
                                   width: 100.0,
                                   lineHeight: 2.0,
-                                  percent: 0.2,
+                                  percent: mph/100,
                                   backgroundColor: Colors.white,
                                   progressColor: accentColor,
                                 ),
                                 SizedBox(height: 4),
-                                Text("9 mph", style: normalXSmall)
+                                Text("$mph mph", style: normalXSmall)
                               ],
                             ),
                           ),
@@ -204,12 +205,12 @@ class _HomePageState extends State<HomePage> {
                                 LinearPercentIndicator(
                                   width: 100.0,
                                   lineHeight: 2.0,
-                                  percent: 0.5,
+                                  percent: rain / 100,
                                   backgroundColor: Colors.white,
                                   progressColor: accentColor,
                                 ),
                                 SizedBox(height: 4),
-                                Text("50 %", style: normalXSmall)
+                                Text("$rain %", style: normalXSmall)
                               ],
                             ),
                           ),
@@ -221,12 +222,12 @@ class _HomePageState extends State<HomePage> {
                                 LinearPercentIndicator(
                                   width: 100.0,
                                   lineHeight: 2.0,
-                                  percent: 0.41,
+                                  percent: humidity / 100,
                                   backgroundColor: Colors.white,
                                   progressColor: accentColor,
                                 ),
                                 SizedBox(height: 4),
-                                Text("41 %", style: normalXSmall)
+                                Text("$humidity %", style: normalXSmall)
                               ],
                             ),
                           ),
