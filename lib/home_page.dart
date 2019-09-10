@@ -80,6 +80,9 @@ class _HomePageState extends State<HomePage> {
                 ),
                 SizedBox(height: 80),
                 mainDisplay(75, "it\'s sunny", 60, 80, 9, 50, 41),
+                SizedBox(height: 40),
+                gradientTemp(
+                    [54, 54, 52, 56, 56, 56, 56, 60, 62, 67, 70, 74, 77, 76, 75, 73, 72, 69, 65, 59, 58, 58, 57, 56, 56]),
               ],
             ),
           ),
@@ -88,7 +91,8 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget mainDisplay(int temp, String message, int low, int high, int mph, int rain, int humidity) {
+  Widget mainDisplay(int temp, String message, int low, int high, int mph,
+      int rain, int humidity) {
     return ClipRect(
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
@@ -188,7 +192,7 @@ class _HomePageState extends State<HomePage> {
                                 LinearPercentIndicator(
                                   width: 100.0,
                                   lineHeight: 2.0,
-                                  percent: mph/100,
+                                  percent: mph / 100,
                                   backgroundColor: Colors.white,
                                   progressColor: accentColor,
                                 ),
@@ -242,5 +246,92 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
+  }
+
+  Widget gradientTemp(List<int> tempList) {
+    List<Color> colorList = convertToColor(tempList);
+
+    return Column(
+      children: <Widget>[
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Text("12pm", style: normalSmall),
+            Text("12am", style: normalSmall),
+            Text("12pm", style: normalSmall),
+          ],
+        ),
+        SizedBox(height: 8),
+        Stack(
+          children: <Widget>[
+            Container(
+              height: 32,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(8)),
+                gradient: LinearGradient(
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
+                  stops: gradientStopList(13),
+                  colors: colorList,
+                ),
+              ),
+            ),
+            Container(
+              height: 32,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: temperatureList(tempList),
+              ),
+            )
+          ],
+        ),
+      ],
+    );
+  }
+
+  List<Widget> temperatureList(List<int> tempList){
+    List<Widget> widgetList = [];
+    for(int i = 0; i < tempList.length; i+=2){
+      Widget text = Text("${tempList[i]}°", style: thinXSmall);
+      widgetList.add(text);
+    }
+    return widgetList;
+  }
+
+  List<Color> convertToColor(List<int> intList) {
+    List<Color> colorList = [];
+    for (int i = 0; i < intList.length; i+=2) {
+      //sunrise (6am-8am)
+      if (i >= 3 && i <= 4) {
+        colorList.add(morningColor.withOpacity(0.75));
+      }
+      //sunset (6pm-8pm)
+      else if (i >= 9 && i <= 10) {
+        colorList.add(eveningColor.withOpacity(0.75));
+      }
+      //temp < 50 F
+      else if (intList[i] < 55) {
+        colorList.add(coldColor.withOpacity(0.75));
+      }
+      //temp < 50 F
+      else if (intList[i] < 70) {
+        colorList.add(mediumColor.withOpacity(0.75));
+      } else {
+        colorList.add(hotColor.withOpacity(0.75));
+      }
+    }
+    return colorList;
+  }
+
+  List<double> gradientStopList(int num) {
+    double total = 0;
+    double inc = 1 / num;
+    List<double> stopList = [];
+    for (int i = 0; i < num; i++) {
+      total += inc;
+      stopList.add(total);
+    }
+    return stopList;
   }
 }
