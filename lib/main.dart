@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
       title: 'Weather App',
       theme: ThemeData(
         backgroundColor: Colors.transparent,
-        canvasColor: Colors.white.withOpacity(0.85)
+        canvasColor: Colors.white.withOpacity(0.5)
       ),
       home: HomePage(),
     );
