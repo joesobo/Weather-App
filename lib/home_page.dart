@@ -11,6 +11,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   String dropdownValue = 'San Fransisco';
+  Color color1 = Color(0xff33A7E5);
+  Color color2 = Color(0xff33A7E5);
 
   @override
   Widget build(BuildContext context) {
@@ -20,74 +22,170 @@ class _HomePageState extends State<HomePage> {
         children: <Widget>[
           Container(
             height: MediaQuery.of(context).size.height,
-            child: Image.asset("images/3.jpg", fit: BoxFit.fitHeight),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                stops: [0, 1],
+                colors: [color1, mediumColor],
+              ),
+            ),
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(24, 24, 24, 0),
+            padding: const EdgeInsets.only(top: 24),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Container(
-                      color: Colors.transparent,
-                      child: DropdownButton<String>(
-                        iconEnabledColor: Colors.white,
-                        elevation: 0,
-                        value: dropdownValue,
-                        onChanged: (String newValue) {
-                          setState(() {
-                            if (newValue != '') {
-                              dropdownValue = newValue;
-                            }
-                          });
-                        },
-                        items: <String>[
-                          '',
-                          'San Fransisco',
-                          'SLO',
-                          'Los Angeles',
-                          'New York'
-                        ].map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(
-                              value,
-                              style: bigBoldShadow,
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                  child: Column(
+                    children: <Widget>[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Container(
+                            color: Colors.transparent,
+                            child: DropdownButton<String>(
+                              iconEnabledColor: Colors.white,
+                              elevation: 0,
+                              value: dropdownValue,
+                              onChanged: (String newValue) {
+                                setState(() {
+                                  if (newValue != '') {
+                                    dropdownValue = newValue;
+                                  }
+                                });
+                              },
+                              items: <String>[
+                                '',
+                                'San Fransisco',
+                                'SLO',
+                                'Los Angeles',
+                                'New York'
+                              ].map<DropdownMenuItem<String>>((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(
+                                    value,
+                                    style: bigBoldShadow,
+                                  ),
+                                );
+                              }).toList(),
                             ),
-                          );
-                        }).toList(),
+                          ),
+                          IconButton(
+                            icon: Icon(Icons.settings, color: Colors.white),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => SettingsPage()),
+                              );
+                            },
+                          ),
+                        ],
                       ),
-                    ),
-                    IconButton(
-                      icon: Icon(Icons.settings, color: Colors.white),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => SettingsPage()),
-                        );
-                      },
-                    ),
-                  ],
+                      Row(
+                        children: <Widget>[
+                          Text('6 August 2019', style: normalMedium),
+                          SizedBox(width: 16),
+                          Text('7:45 PM', style: normalMedium),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-                Row(
-                  children: <Widget>[
-                    Text('6 August 2019', style: normalMedium),
-                    SizedBox(width: 16),
-                    Text('7:45 PM', style: normalMedium),
-                  ],
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                  child: Column(
+                    children: <Widget>[
+                      mainDisplay(75, "it\'s sunny", 60, 80, 9, 50, 41),
+                      SizedBox(height: 40),
+                      gradientTemp([
+                        54,
+                        54,
+                        52,
+                        56,
+                        56,
+                        56,
+                        56,
+                        60,
+                        62,
+                        67,
+                        70,
+                        74,
+                        77,
+                        76,
+                        75,
+                        73,
+                        72,
+                        69,
+                        65,
+                        59,
+                        58,
+                        58,
+                        57,
+                        56,
+                        56
+                      ]),
+                    ],
+                  ),
                 ),
-                SizedBox(height: 80),
-                mainDisplay(75, "it\'s sunny", 60, 80, 9, 50, 41),
-                SizedBox(height: 40),
-                gradientTemp(
-                    [54, 54, 52, 56, 56, 56, 56, 60, 62, 67, 70, 74, 77, 76, 75, 73, 72, 69, 65, 59, 58, 58, 57, 56, 56]),
+                bottomBar()
               ],
             ),
           ),
         ],
       ),
+    );
+  }
+
+  Widget bottomBar() {
+    return ClipRect(
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+        child: Container(
+          height: 80,
+          width: double.infinity,
+          decoration: BoxDecoration(
+            color: Colors.white.withOpacity(0.3),
+          ),
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 24),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                weekDayAverage(
+                    "Mon", Icon(Icons.ac_unit, color: Colors.white), 50),
+                weekDayAverage(
+                    "Tue", Icon(Icons.ac_unit, color: Colors.white), 50),
+                weekDayAverage(
+                    "Wed", Icon(Icons.ac_unit, color: Colors.white), 50),
+                weekDayAverage(
+                    "Thu", Icon(Icons.ac_unit, color: Colors.white), 50),
+                weekDayAverage(
+                    "Fri", Icon(Icons.ac_unit, color: Colors.white), 50),
+                weekDayAverage(
+                    "Sat", Icon(Icons.ac_unit, color: Colors.white), 50),
+                weekDayAverage(
+                    "Sun", Icon(Icons.ac_unit, color: Colors.white), 50),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget weekDayAverage(String day, Icon icon, int temp) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Text("$day", style: normalSmall),
+        Padding(
+            padding: const EdgeInsets.symmetric(vertical: 4.0), child: icon),
+        Text("$temp°", style: normalSmall),
+      ],
     );
   }
 
@@ -265,7 +363,7 @@ class _HomePageState extends State<HomePage> {
         Stack(
           children: <Widget>[
             Container(
-              height: 32,
+              height: 40,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(8)),
                 gradient: LinearGradient(
@@ -277,23 +375,59 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             Container(
-              height: 32,
+              height: 40,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: temperatureList(tempList),
               ),
-            )
+            ),
+            Container(
+              height: 40,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  Container(
+                    width: 1,
+                    color: Colors.white,
+                  ),
+                  Container(
+                    width: 1,
+                    color: Colors.white,
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
+        SizedBox(height: 8),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[
+            Row(
+              children: <Widget>[
+                Text("7:15am", style: normalSmall),
+                SizedBox(width: 4),
+                Icon(Icons.ac_unit, color: Colors.white)
+              ],
+            ),
+            Row(
+              children: <Widget>[
+                Text("7:45pm", style: normalSmall),
+                SizedBox(width: 4),
+                Icon(Icons.ac_unit, color: Colors.white)
+              ],
+            ),
+          ],
+        )
       ],
     );
   }
 
-  List<Widget> temperatureList(List<int> tempList){
+  List<Widget> temperatureList(List<int> tempList) {
     List<Widget> widgetList = [];
-    for(int i = 0; i < tempList.length; i+=2){
-      Widget text = Text("${tempList[i]}°", style: thinXSmall);
+    for (int i = 0; i < tempList.length; i += 2) {
+      Widget text = Text("${tempList[i]}°", style: thinSmall);
       widgetList.add(text);
     }
     return widgetList;
@@ -301,20 +435,20 @@ class _HomePageState extends State<HomePage> {
 
   List<Color> convertToColor(List<int> intList) {
     List<Color> colorList = [];
-    for (int i = 0; i < intList.length; i+=2) {
+    for (int i = 0; i < intList.length; i += 2) {
       //sunrise (6am-8am)
-      if (i >= 3 && i <= 4) {
+      if (i >= 4 && i <= 6) {
         colorList.add(morningColor.withOpacity(0.75));
       }
       //sunset (6pm-8pm)
-      else if (i >= 9 && i <= 10) {
+      else if (i >= 16 && i <= 18) {
         colorList.add(eveningColor.withOpacity(0.75));
       }
-      //temp < 50 F
-      else if (intList[i] < 55) {
+      //temp cold
+      else if (intList[i] < 50) {
         colorList.add(coldColor.withOpacity(0.75));
       }
-      //temp < 50 F
+      //temp med
       else if (intList[i] < 70) {
         colorList.add(mediumColor.withOpacity(0.75));
       } else {

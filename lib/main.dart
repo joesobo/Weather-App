@@ -10,6 +10,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Weather App',
       theme: ThemeData(
+        accentColor: Colors.transparent,
+        scaffoldBackgroundColor: Colors.transparent,
+        appBarTheme: AppBarTheme(color: Colors.transparent),
         backgroundColor: Colors.transparent,
         canvasColor: Colors.white.withOpacity(0.5)
       ),

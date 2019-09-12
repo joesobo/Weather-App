@@ -10,6 +10,11 @@ const normalLarge = TextStyle(
   fontSize: 16,
 );
 
+const normalBig = TextStyle(
+  color: Colors.white,
+  fontSize: 24,
+);
+
 const bigBold = TextStyle(
   color: Colors.white,
   fontSize: 24,
@@ -32,6 +37,12 @@ const bigBoldShadow = TextStyle(
 const normalSmall = TextStyle(
   color: Colors.white,
   fontSize: 12,
+);
+
+const thinSmall = TextStyle(
+  color: Colors.white,
+  fontSize: 12,
+  fontWeight: FontWeight.w100,
 );
 
 const normalXSmall = TextStyle(
@@ -59,6 +70,7 @@ const giantBold = TextStyle(
 );
 
 const accentColor = Color(0xff62E7FF);
+const greyColor = Color(0xffEBEBEB);
 
 const morningColor = Color(0xffE2B214);
 const eveningColor = Color(0xffB659C3);
